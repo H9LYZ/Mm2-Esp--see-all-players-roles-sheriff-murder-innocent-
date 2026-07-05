@@ -1,0 +1,32 @@
+local function applyCham(character, color)
+    local highlight = character:FindFirstChild("RoleHighlight")
+    if not highlight then
+        highlight = Instance.new("Highlight")
+        highlight.Name = "RoleHighlight"
+        highlight.Parent = character
+    end
+    highlight.FillColor = color
+end
+
+while true do
+    local allPlayers = game.Players:GetPlayers()
+
+    for _, player in ipairs(allPlayers) do
+        local character = player.Character
+        local backpack = player.Backpack
+
+        if character and backpack then
+            local hasKnife = character:FindFirstChild("Knife") or backpack:FindFirstChild("Knife")
+            local hasGun = character:FindFirstChild("Gun") or backpack:FindFirstChild("Gun")
+
+            if hasKnife then
+                applyCham(character, Color3.fromRGB(255, 0, 0))
+            elseif hasGun then
+                applyCham(character, Color3.fromRGB(0, 0, 255))
+            else
+                applyCham(character, Color3.fromRGB(0, 255, 0))
+            end
+        end
+    end
+    task.wait(1)
+end
